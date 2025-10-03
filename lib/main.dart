@@ -37,7 +37,7 @@ class Adhkar {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<Adhkar> adhkar = [Adhkar('سبحان الله'),Adhkar('الحمد الله'),Adhkar('الله اكبر')];
+  List<Adhkar> adhkar = [Adhkar('ََسُبْحانَ الله'),Adhkar('الحَمْدُ لله'),Adhkar('اللهُ أكْبَر')];
 
   void _incrementCounter(Adhkar dhikr) {
     setState(() {
