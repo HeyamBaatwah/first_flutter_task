@@ -10,131 +10,107 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'المسبحة الإلكترونية',
-      theme: ThemeData(
-
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: const MyHomePage(title: 'المسبحة الإلكترونية'),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-
-  final String title;
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class Adhkar {
-  Adhkar(this.dhikr);
-  String dhikr;
-  int _counter = 0;
-}
-
 class _MyHomePageState extends State<MyHomePage> {
-  List<Adhkar> adhkar = [Adhkar('ََسُبْحانَ الله'),Adhkar('الحَمْدُ لله'),Adhkar('اللهُ أكْبَر')];
+List<String> _todos= [];
 
-  void _incrementCounter(Adhkar dhikr) {
+void _addTask(String task) {
+  if(task.isNotEmpty) {
     setState(() {
-      dhikr._counter++;
+      _todos.add(task);
     });
   }
+}
 
+void _deleteTask(int index) {
+  setState(() {
+    _todos.removeAt(index);
+  });
+}
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
+      backgroundColor: Color(0xFFF8F1ED),
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Center(child: Text(widget.title, style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),),
-      ),
-      body: Stack(
-        alignment: Alignment.centerLeft,
-        children: [
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                buildCounter(adhkar[0]),
-                SizedBox(height: 30,),
-                buildCounter(adhkar[1]),
-                SizedBox(height: 30,),
-                buildCounter(adhkar[2])
-              ]
+        backgroundColor: Color(0xFFF8F1ED),
+        title: Center(
+          child: Text(
+            "To Do List",
+            style: TextStyle(
+              color: Colors.deepPurple.shade100,
+              fontSize: 40,
+              fontWeight: FontWeight.bold,
             ),
           ),
-          Positioned(
-            bottom: 30,
-            left: 30,
-            child: ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  for(Adhkar i in adhkar) {
-                    i._counter = 0;
-                  }
-                });
-              },
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-                  foregroundColor: Colors.white,
-                  padding: EdgeInsets.all(20),
-                  shape: CircleBorder()
-              ),
-              child: Text(
-                '×',
+        ),
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15,),
+            child: Container(
+              color: Color(0xFFF8F1ED),
+              child: TextField(
+                onSubmitted: _addTask,
                 style: TextStyle(
-                  fontSize: 40,
+                  fontSize: 25,
+                  color: Color(0xFF818181)
+                ),
+                decoration: InputDecoration(
+                  label: Text('Enter a new task'),
+                  labelStyle: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.pink.shade100,
+                  ),
+                  border: InputBorder.none,
                 ),
               ),
             ),
           ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: _todos.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: ListTile(
+                    tileColor: index%2 == 1? Colors.pink.shade100: Colors.deepPurple.shade100,
+                    title: Text(
+                      _todos[index],
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white
+                      ),
+                    ),
+                    trailing: IconButton(
+                      onPressed: () => _deleteTask(index),
+                      icon: Icon(
+                        Icons.delete,
+                        color: Colors.grey,
+                      )
+                    ),
+                  ),
+                );
+              }
+            )
+          )
         ],
       ),
-    );
-  }
-
-  Column buildCounter(Adhkar dhikr) {
-    return Column(
-      children: [
-        Text(
-          dhikr.dhikr,
-          style: TextStyle(
-              fontSize: 40
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 10),
-          child: Text(
-            '${dhikr._counter}',
-            style: Theme.of(context).textTheme.headlineMedium,
-          ),
-        ),
-        ElevatedButton(
-            onPressed: () {
-              _incrementCounter(dhikr);
-            },
-            style: ElevatedButton.styleFrom(
-                backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-                foregroundColor: Colors.white,
-                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 0),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20)
-                )
-            ),
-            child: Text(
-              dhikr.dhikr,
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold
-              ),
-            )
-        ),
-      ],
     );
   }
 }
