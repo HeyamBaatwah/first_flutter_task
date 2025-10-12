@@ -10,6 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: const MyHomePage(),
     );
   }
@@ -76,7 +77,6 @@ void _deleteTask(int index) {
                     fontWeight: FontWeight.bold,
                     color: Colors.pink.shade100,
                   ),
-                  border: InputBorder.none,
                 ),
               ),
             ),
