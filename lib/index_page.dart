@@ -59,12 +59,11 @@ class _IndexPageState extends State<IndexPage> {
         },
         unselectedItemColor: Colors.grey,
         selectedItemColor: _getColor(_navIndex),
-        backgroundColor: Colors.white,
         items: [
-          BottomNavigationBarItem(label: 'الرئيسية', icon: Icon(Icons.home_filled),),
-          BottomNavigationBarItem(label: 'الحساب', icon: Icon(Icons.account_box)),
-          BottomNavigationBarItem(label: 'البحث', icon: Icon(Icons.search)),
-          BottomNavigationBarItem(label: 'الاعدادات', icon: Icon(Icons.settings)),
+          BottomNavigationBarItem(label: 'الرئيسية', icon: Icon(Icons.home_filled), backgroundColor: Colors.white),
+          BottomNavigationBarItem(label: 'الحساب', icon: Icon(Icons.account_box), backgroundColor: Colors.white),
+          BottomNavigationBarItem(label: 'البحث', icon: Icon(Icons.search), backgroundColor: Colors.white),
+          BottomNavigationBarItem(label: 'الاعدادات', icon: Icon(Icons.settings), backgroundColor: Colors.white),
         ],
       ),
     );
