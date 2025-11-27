@@ -15,37 +15,15 @@ class _IndexPageState extends State<IndexPage> {
   int _navIndex = 0;
   List<Widget> _pages = [
     HomePage(),
+    SearchPage(dictionary: HomePage.dictionary,),
     AccountPage(),
-    SearchPage(),
     SettingsPage()
   ];
 
-  String _getTitle(int index) {
-    switch (index){
-      case 0 : return 'الصفحة الرئيسية';
-      case 1 : return 'صفحة الحساب';
-      case 2 : return 'صفحة البحث';
-      case 3 : return 'صفحة الاعدادات';
-      default : return 'Error 404';
-
-    }
-  }
-
-  Color _getColor(int index) {
-    switch (index){
-      case 0 : return Color(0xff023048);
-      case 1 : return Color(0xff229ebd);
-      case 2 : return Color(0xfffb8600);
-      case 3 : return Color(0xffffb702);
-      default : return Colors.grey;
-
-    }
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(title: Center(child: Text(_getTitle(_navIndex), style: TextStyle(color: Colors.white, fontSize: 30),)), backgroundColor: _getColor(_navIndex),),
+      backgroundColor: Color(0xfff4f7fc),
       body: IndexedStack(
         index: _navIndex,
         children: _pages,
@@ -55,14 +33,15 @@ class _IndexPageState extends State<IndexPage> {
         onTap: (index){
           setState(() {
             _navIndex = index;
+            _pages[1] = SearchPage(dictionary: HomePage.dictionary);
           });
         },
-        unselectedItemColor: Colors.grey,
-        selectedItemColor: _getColor(_navIndex),
+        unselectedItemColor: Color(0xffd8e8f6),
+        selectedItemColor: Color(0xff0343cb),
         items: [
-          BottomNavigationBarItem(label: 'الرئيسية', icon: Icon(Icons.home_filled), backgroundColor: Colors.white),
-          BottomNavigationBarItem(label: 'الحساب', icon: Icon(Icons.account_box), backgroundColor: Colors.white),
+          BottomNavigationBarItem(label: 'الرئيسية', icon: Icon(Icons.home_filled), backgroundColor: Color(0xfff4f7fc)),
           BottomNavigationBarItem(label: 'البحث', icon: Icon(Icons.search), backgroundColor: Colors.white),
+          BottomNavigationBarItem(label: 'الحساب', icon: Icon(Icons.account_box), backgroundColor: Colors.white),
           BottomNavigationBarItem(label: 'الاعدادات', icon: Icon(Icons.settings), backgroundColor: Colors.white),
         ],
       ),

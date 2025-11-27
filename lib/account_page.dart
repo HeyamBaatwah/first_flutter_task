@@ -10,13 +10,22 @@ class AccountPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          SizedBox(height: 100,),
           Icon(
-            Icons.account_box,
-            color: Color(0xff229ebd),
-            size: 100,
+            Icons.account_circle,
+            color: Color(0xff0343cb),
+            size: 120,
           ),
-          SizedBox(height: 20,),
-          Text('صفحة الحساب', style: TextStyle(color: Color(0xff229ebd), fontSize: 40, fontWeight: FontWeight.bold),)
+          Text('الحساب', style:  TextStyle(color: Color(0xff0343cb), fontSize: 40, fontWeight: FontWeight.bold),),
+          SizedBox(height: 50,),
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(50), topRight: Radius.circular(50))
+              ),
+            ),
+          )
         ],
       ),
     );
