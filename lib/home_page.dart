@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  static List dictionary = [];
+  static List dictionary = [
+    ['Book', 'كتاب', false],
+    ['Table', 'طاولة', false],
+    ['Chair', 'كرسي', false],
+    ['Window', 'نافذة', false],
+    ['Door', 'باب', false],
+    ['Sun', 'شمس', false],
+    ['Moon', 'قمر', false],
+  ];
   const HomePage({super.key});
 
   @override
@@ -39,7 +47,7 @@ class _HomePageState extends State<HomePage> {
       child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 100, bottom: 20),
+              padding: const EdgeInsets.only(top: 60, bottom: 20),
               child: Icon(Icons.translate, color: Color(0xff0343cb), size: 150,),
             ),
             Text('أضف كلمة جديدة للقاموس', style: TextStyle(color: Color(0xff0343cb), fontSize: 30, fontWeight: FontWeight.bold),),
