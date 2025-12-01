@@ -13,7 +13,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final _formKey = GlobalKey<FormState>();
-  bool agree = false;
+  bool isAgreed = false;
 
 
   @override
@@ -62,8 +62,8 @@ class _MyAppState extends State<MyApp> {
                     if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
                       return "رقم الهاتف يجب أن يحتوي على أرقام فقط";
                     }
-                    if (value.length != 10) {
-                      return "رقم الهاتف يجب أن يكون 10 أرقام";
+                    if (value.length != 9) {
+                      return "رقم الهاتف يجب أن يكون 9 أرقام";
                     }
                     if (!value.startsWith("7")) {
                       return "رقم الهاتف يجب أن يبدأ بـ 7";
@@ -103,8 +103,17 @@ class _MyAppState extends State<MyApp> {
                     }
                     return null;
                   },),
-                  Salary(),
-                  SizedBox(height: 20,)
+                  TextFielSection(label: 'الدخل الشهري', hint: 'ادخل دخلك الشهري', validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'يرجى إدخال الدخل الشهري';
+                    }
+                    if (double.tryParse(value) == null) {
+                      return 'الرجاء إدخال رقم صحيح';
+                    }
+                    return null;
+                  },),
+                  Submit(formKey: _formKey,),
+                  SizedBox(height: 50,)
                 ],
               ),
             ),
@@ -335,7 +344,7 @@ class _GenderState extends State<Gender> {
         RadioListTile<int>(
           title: Text("ذكر", textDirection: TextDirection.rtl, textAlign: TextAlign.right,),
           value: 1,
-          activeColor: Colors.black54,
+          activeColor: Colors.black87,
           controlAffinity: ListTileControlAffinity.trailing,
           groupValue: gender,
           onChanged: (int? value) {
@@ -347,7 +356,7 @@ class _GenderState extends State<Gender> {
         RadioListTile<int>(
           title: Text("أنثى", textDirection: TextDirection.rtl, textAlign: TextAlign.right,),
           value: 2,
-          activeColor: Colors.black54,
+          activeColor: Colors.black87,
           controlAffinity: ListTileControlAffinity.trailing,
           groupValue: gender,
           onChanged: (int? value) {
@@ -471,43 +480,66 @@ class _CurrencyState extends State<Currency> {
 }
 
 
-class Salary extends StatefulWidget {
-  const Salary({super.key});
+class Submit extends StatefulWidget {
+  final GlobalKey<FormState> formKey;
+  const Submit({super.key, required this.formKey,});
 
   @override
-  State<Salary> createState() => _SalaryState();
+  State<Submit> createState() => _SubmitState();
 }
 
-class _SalaryState extends State<Salary> {
-  RangeValues range = RangeValues(100, 10000);
-
+class _SubmitState extends State<Submit> {
+  bool isAgreed = false;
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         SizedBox(height: 20,),
-        Text('الدخل الشهري', style: TextStyle(color: Colors.black87, fontSize: 20,),),
-        RangeSlider(
-          values: range,
-          min: 100,
-          max: 10000,
-          divisions: 10,
-          labels: RangeLabels(
-            range.start.round().toString(),
-            range.end.round().toString(),
-          ),
-          onChanged: (RangeValues newRange) {
+        CheckboxListTile(
+          title: Text('أوافق على جميع الشروط والأحكام', style: TextStyle(color: Colors.black87, fontSize: 20,),textDirection: TextDirection.rtl, textAlign: TextAlign.right,),
+          activeColor: Colors.black87,
+          controlAffinity: ListTileControlAffinity.trailing,
+          value: isAgreed,
+          onChanged: (bool? value) {
             setState(() {
-              range = newRange;
+              isAgreed = value!;
             });
           },
         ),
+        Builder(
+            builder: (context) {
+              return ElevatedButton(
+                onPressed: () {
+                  if (widget.formKey.currentState!.validate()) {
+                    widget.formKey.currentState!.save();
+                    if (isAgreed) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('تم إرسال الاستمارة بنجاح')),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('يجب الموافقة على الشروط قبل الإرسال')),
+                      );
+                    }
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('تأكد من إدخال جميع الحقول بشكل صحيح')),
+                    );
+                  }
+
+                },
+                child: Text('إرسال'),
+              );
+            }
+        ),
+
       ],
-    )
-    ;
+    );
   }
 }
+
+
 
 
 
