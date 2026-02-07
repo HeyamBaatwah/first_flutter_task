@@ -1,4 +1,4 @@
-import 'package:first_task/login.dart';
+import 'package:first_task/home_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,7 +12,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      home: HomePage(),
     );
   }
 }
+
